@@ -1,19 +1,19 @@
-name: SonarCloud
+name: Build Maven
 on:
   push:
     branches:
-      - master
+      - '*'
+  pull_request:
+    branches:
+      - '*'
+
 jobs:
   build:
-    runs-on: ubuntu-16.04
+    runs-on: ubuntu-latest
+
+    name: Java ${{ matrix.java }} sample
     steps:
-    - uses: actions/checkout@v1
-    - name: Set up JDK
-      uses: actions/setup-java@v1
-      with:
-        java-version: '11'
-    - name: Analyze with SonarCloud
-run: mvn sonar:sonar -Dsonar.projectKey=leo3620_Cours_outils -Dsonar.organization=leo3620 -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=be8a3cfc1ba7ebab13d205adb33d0948e8a1b5ef
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        SONAR_TOKEN: be8a3cfc1ba7ebab13d205adb33d0948e8a1b5ef
+      - uses: actions/checkout@v2
+
+      - name: Analyze with Sonar
+        run: mvn sonar:sonar -Dsonar.projectKey=leo3620 -Dsonar.organization=leo3620 -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=be8a3cfc1ba7ebab13d205adb33d0948e8a1b5ef
