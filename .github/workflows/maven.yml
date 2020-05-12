@@ -1,16 +1,19 @@
+name: SonarCloud
 on:
-  # Trigger analysis when pushing in master or pull requests, and when creating
-  # a pull request.
   push:
-    branches: [ master ]
-name: Main Workflow
+    branches:
+      - master
 jobs:
-  sonarcloud:
-    runs-on: ubuntu-latest
+  build:
+    runs-on: ubuntu-16.04
     steps:
-      - uses: actions/checkout@v2
-      - name: SonarCloud Scan
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: be8a3cfc1ba7ebab13d205adb33d0948e8a1b5ef
-        run: mvn clean verify sonar:sonar -Dsonar.host.url=https://sonarcloud.io/ -Dsonar.login=$SONAR_TOKEN -Dsonar.organization=leo3620
+    - uses: actions/checkout@v1
+    - name: Set up JDK
+      uses: actions/setup-java@v1
+      with:
+        java-version: '11'
+    - name: Analyze with SonarCloud
+      run: ./mvnw -B verify sonar:sonar -Dsonar.projectKey=leo3620 -Dsonar.organization=baralga -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SONAR_TOKEN: be8a3cfc1ba7ebab13d205adb33d0948e8a1b5ef
