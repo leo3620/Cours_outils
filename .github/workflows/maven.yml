@@ -16,4 +16,10 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Analyze with Sonar
+        #uses: sonarsource/sonarcloud-github-action@master
+        #with:
+        #  projectBaseDir: org.sbouchet.emn.fil1A
+        #  fetch-depth: 0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: mvn sonar:sonar -Dsonar.projectKey=leo3620 -Dsonar.organization=leo3620 -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=be8a3cfc1ba7ebab13d205adb33d0948e8a1b5ef
