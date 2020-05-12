@@ -19,3 +19,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: be8a3cfc1ba7ebab13d205adb33d0948e8a1b5ef
+        run: mvn clean verify sonar:sonar
